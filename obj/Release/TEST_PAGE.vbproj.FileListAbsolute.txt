@@ -1,0 +1,14 @@
+C:\rep\jcotizador\coizador\pagina\bin\ConsumirWeb.dll.config
+C:\rep\jcotizador\coizador\pagina\bin\ConsumirWeb.dll
+C:\rep\jcotizador\coizador\pagina\bin\ConsumirWeb.pdb
+C:\rep\jcotizador\coizador\pagina\bin\ConsumirWeb.xml
+C:\rep\jcotizador\coizador\pagina\obj\Release\TEST_PAGE.vbproj.AssemblyReference.cache
+C:\rep\jcotizador\coizador\pagina\obj\Release\ConsumirWeb.Resources.resources
+C:\rep\jcotizador\coizador\pagina\obj\Release\TEST_PAGE.vbproj.GenerateResource.cache
+C:\rep\jcotizador\coizador\pagina\obj\Release\TEST_PAGE.vbproj.CoreCompileInputs.cache
+C:\rep\jcotizador\coizador\pagina\obj\Release\TEST_PAGE.vbproj.CopyComplete
+C:\rep\jcotizador\coizador\pagina\obj\Release\ConsumirWeb.dll
+C:\rep\jcotizador\coizador\pagina\obj\Release\ConsumirWeb.xml
+C:\rep\jcotizador\coizador\pagina\obj\Release\ConsumirWeb.pdb
+C:\rep\jcotizador\coizador\pagina\bin\Consumo\ConsumoWeb.aspx.designer.vb
+C:\rep\jcotizador\coizador\pagina\bin\System.Net.Http.dll
