@@ -5,18 +5,18 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\rep\jcotizador\coizador\publicados\sitio web</_PublishTargetUrl>
-    <History>True|2025-02-21T18:20:02.3650633Z;True|2025-02-20T11:53:11.2580030-06:00;True|2025-02-20T10:46:13.4518629-06:00;True|2025-02-20T10:29:02.7710267-06:00;False|2025-02-20T10:28:05.4588889-06:00;False|2025-02-20T10:27:21.4046859-06:00;False|2025-02-20T10:20:04.2298163-06:00;False|2025-02-20T10:17:50.9996102-06:00;False|2025-02-20T10:16:34.8898584-06:00;False|2025-02-20T10:15:53.8455727-06:00;False|2025-02-20T10:08:27.5554568-06:00;False|2025-02-20T10:06:50.4828485-06:00;False|2025-02-20T10:05:16.7566936-06:00;False|2025-02-20T10:04:42.2426403-06:00;False|2025-02-20T10:01:57.9940269-06:00;False|2025-02-20T09:59:54.2245496-06:00;False|2025-02-20T09:59:08.5400536-06:00;False|2025-02-20T09:53:28.5515967-06:00;False|2025-02-20T09:52:55.2308251-06:00;</History>
+    <History>True|2025-03-04T18:13:15.2167586Z;True|2025-02-21T12:20:02.3650633-06:00;True|2025-02-20T11:53:11.2580030-06:00;True|2025-02-20T10:46:13.4518629-06:00;True|2025-02-20T10:29:02.7710267-06:00;False|2025-02-20T10:28:05.4588889-06:00;False|2025-02-20T10:27:21.4046859-06:00;False|2025-02-20T10:20:04.2298163-06:00;False|2025-02-20T10:17:50.9996102-06:00;False|2025-02-20T10:16:34.8898584-06:00;False|2025-02-20T10:15:53.8455727-06:00;False|2025-02-20T10:08:27.5554568-06:00;False|2025-02-20T10:06:50.4828485-06:00;False|2025-02-20T10:05:16.7566936-06:00;False|2025-02-20T10:04:42.2426403-06:00;False|2025-02-20T10:01:57.9940269-06:00;False|2025-02-20T09:59:54.2245496-06:00;False|2025-02-20T09:59:08.5400536-06:00;False|2025-02-20T09:53:28.5515967-06:00;False|2025-02-20T09:52:55.2308251-06:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/ConsumirWeb.dll">
-      <publishTime>02/21/2025 12:19:58</publishTime>
+      <publishTime>03/04/2025 12:13:11</publishTime>
     </File>
     <File Include="bin/ConsumirWeb.pdb">
-      <publishTime>02/21/2025 12:19:58</publishTime>
+      <publishTime>03/04/2025 12:13:11</publishTime>
     </File>
     <File Include="bin/ConsumirWeb.xml">
-      <publishTime>02/21/2025 12:19:58</publishTime>
+      <publishTime>03/04/2025 12:13:11</publishTime>
     </File>
     <File Include="bin/Consumo/ConsumoWeb.aspx.designer.vb">
       <publishTime>01/30/2025 14:38:49</publishTime>
@@ -222,8 +222,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/System.Security.Cryptography.X509Certificates.dll.refresh">
       <publishTime>01/27/2025 15:47:28</publishTime>
     </File>
+    <File Include="bin/System.ValueTuple.dll">
+      <publishTime>05/15/2018 07:29:52</publishTime>
+    </File>
     <File Include="Consumo/ConsumirWeb.aspx">
-      <publishTime>02/14/2025 11:34:35</publishTime>
+      <publishTime>03/04/2025 11:46:06</publishTime>
     </File>
     <File Include="packages/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1/.signature.p7s">
       <publishTime>12/17/2018 10:01:52</publishTime>
@@ -1525,7 +1528,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/04/2016 22:57:18</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/20/2025 11:53:08</publishTime>
+      <publishTime>03/04/2025 12:13:12</publishTime>
     </File>
   </ItemGroup>
 </Project>
