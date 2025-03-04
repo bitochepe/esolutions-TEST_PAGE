@@ -7,6 +7,8 @@ Partial Class ConsumirWeb
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Dim strMetodo As String
+        Dim strRespuesta As String
         Try
 
         Catch ex As Exception
@@ -90,6 +92,50 @@ Partial Class ConsumirWeb
         ConsumirServicio()
     End Sub
 
+    <System.Web.Services.WebMethod()>
+    Public Shared Function ObtenerListaArchivos() As List(Of String)
+        Dim strArchivos = New List(Of String)
+        Dim strRuta As String
+
+        strRuta = "D:\Cotizador\Sitios Web\Web Cliente\Archivos\"
+        strRuta = ConfigurationManager.AppSettings("path")
+
+        If Directory.Exists(strRuta) Then
+            strArchivos = Directory.GetFiles(strRuta, "*.xml").Select(Function(f) Path.GetFileName(f)).ToList()
+        End If
+
+        Return strArchivos
+    End Function
+
+
+    <System.Web.Services.WebMethod()>
+    Public Shared Function ObtenerContenidoArchivo(strNombreArchivo As String) As String
+        'Dim strRutaArchivo As String = Path.Combine("D:\Cotizador\Sitios Web\Web Cliente\Archivos\", strNombreArchivo)
+        Dim strRutaArchivo As String = Path.Combine(ConfigurationManager.AppSettings("path"), strNombreArchivo)
+
+        If File.Exists(strRutaArchivo) Then
+            Return File.ReadAllText(strRutaArchivo)
+        Else
+            Return "Error: El archivo no existe"
+        End If
+
+    End Function
+
+    <System.Web.Services.WebMethod()>
+    Public Shared Function GuardarArchivo(strNombreArchivo As String, strNuevoContenido As String) As (Integer, String)
+        'Dim strRutaArchivo As String = Path.Combine("D:\Cotizador\Sitios Web\Web Cliente\Archivos\", strNombreArchivo)
+        Dim strRutaArchivo As String = Path.Combine(ConfigurationManager.AppSettings("path"), strNombreArchivo)
+
+        Try
+            Dim xmlDoc As New XmlDocument()
+            xmlDoc.LoadXml(strNuevoContenido)
+
+            File.WriteAllText(strRutaArchivo, strNuevoContenido)
+            Return (1, "Archivo guardado correctamente.")
+        Catch ex As Exception
+            Return (0, "ERROR: El contenido no es un XML válido.")
+        End Try
+    End Function
     'Public Sub EscribirRegistro(strMensaje As String)
     '    Dim strRuta As String
     '    strRuta = Server.MapPath("~/Archivos/Prueba.txt")

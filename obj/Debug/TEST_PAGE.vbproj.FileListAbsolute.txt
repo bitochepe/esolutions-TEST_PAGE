@@ -12,3 +12,5 @@ C:\rep\jcotizador\coizador\pagina\obj\Debug\TEST_PAGE.vbproj.CopyComplete
 C:\rep\jcotizador\coizador\pagina\obj\Debug\ConsumirWeb.dll
 C:\rep\jcotizador\coizador\pagina\obj\Debug\ConsumirWeb.xml
 C:\rep\jcotizador\coizador\pagina\obj\Debug\ConsumirWeb.pdb
+C:\rep\jcotizador\coizador\pagina\bin\System.ValueTuple.dll
+C:\rep\jcotizador\coizador\pagina\bin\System.ValueTuple.xml
