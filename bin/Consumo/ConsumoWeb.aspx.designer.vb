@@ -43,21 +43,27 @@ Partial Public Class ConsumirWeb
     Protected WithEvents descuentoConstancia As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents tipoDeuda1 As Global.System.Web.UI.WebControls.DropDownList
     Protected WithEvents saldoDeuda1 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents limiteTarjeta1 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents cuotaDeuda1 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents tipoDeuda2 As Global.System.Web.UI.WebControls.DropDownList
     Protected WithEvents saldoDeuda2 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents limiteTarjeta2 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents cuotaDeuda2 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents tipoDeuda3 As Global.System.Web.UI.WebControls.DropDownList
     Protected WithEvents saldoDeuda3 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents limiteTarjeta3 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents cuotaDeuda3 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents tipoDeuda4 As Global.System.Web.UI.WebControls.DropDownList
     Protected WithEvents saldoDeuda4 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents limiteTarjeta4 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents cuotaDeuda4 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents tipoDeuda5 As Global.System.Web.UI.WebControls.DropDownList
     Protected WithEvents saldoDeuda5 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents limiteTarjeta5 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents cuotaDeuda5 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents tipoDeuda6 As Global.System.Web.UI.WebControls.DropDownList
     Protected WithEvents saldoDeuda6 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents limiteTarjeta6 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents cuotaDeuda6 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents mes1 As Global.System.Web.UI.WebControls.TextBox
     Protected WithEvents mes2 As Global.System.Web.UI.WebControls.TextBox
@@ -68,6 +74,15 @@ Partial Public Class ConsumirWeb
     Protected WithEvents clasificacionSIB As Global.System.Web.UI.WebControls.DropDownList
     Protected WithEvents conteoCCR As Global.System.Web.UI.WebControls.DropDownList
     Protected WithEvents btnCotizador As Global.System.Web.UI.WebControls.Button
-
+    Protected WithEvents plazoMeses As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents tasaInteres As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents iggsActividadEconomica As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents isrActividadEconomica As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents bonificacionActividadEconomica As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents comisionesActividadEconomica As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents iggsActividadEconomica2 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents bonificacionActividadEconomica2 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents isrActividadEconomica2 As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents comisionesActividadEconomica2 As Global.System.Web.UI.WebControls.TextBox
 
 End Class
