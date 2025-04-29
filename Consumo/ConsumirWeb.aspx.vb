@@ -1,6 +1,9 @@
 ﻿Imports System.IO
+Imports System.Net
 Imports System.Net.Http
+Imports System.Security.Policy
 Imports System.Threading.Tasks
+Imports System.Web.Script.Serialization
 Imports System.Xml
 
 Partial Class ConsumirWeb
@@ -19,7 +22,8 @@ Partial Class ConsumirWeb
 
     Public Function ConsumirServicio() As Task
         Dim client As New HttpClient()
-        Dim url As String = "http://cotizador.esol.com/Cotizador/PrecalificacionCreditos.asmx/ObtenerDatos"
+        'Dim url As String = "http://cotizador.esol.com/Cotizador/PrecalificacionCreditos.asmx/ObtenerDatos"
+        Dim url As String = ConfigurationManager.AppSettings("webServiceUrl")
 
         Try
             client.Timeout = TimeSpan.FromSeconds(30)
@@ -117,19 +121,20 @@ Partial Class ConsumirWeb
         Dim strArchivos = New List(Of String)
         Dim strRuta As String
 
-        strRuta = "C:\Users\juanj\OneDrive\Documentos\esolutions\Cotizador\Sitios Web\Web Cliente\Archivos"
+        strRuta = ConfigurationManager.AppSettings("pathArchivos")
 
         If Directory.Exists(strRuta) Then
             strArchivos = Directory.GetFiles(strRuta, "*.xml").Select(Function(f) Path.GetFileName(f)).ToList()
         End If
 
         Return strArchivos
+
     End Function
 
 
     <System.Web.Services.WebMethod()>
     Public Shared Function ObtenerContenidoArchivo(strNombreArchivo As String) As String
-        Dim strRutaArchivo As String = Path.Combine("C:\Users\juanj\OneDrive\Documentos\esolutions\Cotizador\Sitios Web\Web Cliente\Archivos", strNombreArchivo)
+        Dim strRutaArchivo As String = Path.Combine(ConfigurationManager.AppSettings("pathArchivos"), strNombreArchivo)
 
         If File.Exists(strRutaArchivo) Then
             Return File.ReadAllText(strRutaArchivo)
@@ -141,7 +146,7 @@ Partial Class ConsumirWeb
 
     <System.Web.Services.WebMethod()>
     Public Shared Function GuardarArchivo(strNombreArchivo As String, strNuevoContenido As String) As (Integer, String)
-        Dim strRutaArchivo As String = Path.Combine("C:\Users\juanj\OneDrive\Documentos\esolutions\Cotizador\Sitios Web\Web Cliente\Archivos", strNombreArchivo)
+        Dim strRutaArchivo As String = Path.Combine(ConfigurationManager.AppSettings("pathArchivos"), strNombreArchivo)
 
         Try
             Dim xmlDoc As New XmlDocument()
