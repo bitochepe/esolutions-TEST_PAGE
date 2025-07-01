@@ -9,75 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Cotizador</title>
     <style>
-    /*body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      padding: 0;
-    }*/
-
-    .form-container {
-      display:grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .form-container2 {
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .group {
-      display: flex;
-      flex-direction: column;
-      width: 250px
-    }
-
     label {
       font-weight: bold;
       margin-bottom: 2px;
     }
-
-    input, select, textarea {
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 2px;
-    }
-
-    .form-actions {
-      grid-column: span 5;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      background-color: #007bff;
-      color: #fff;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .ocultarElemento {
-      display: none;
-    }
-
-    .mostrarElemento {
-      display: block;
-    }
-    
-
-  </style>
+    </style>
 </head>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -86,397 +22,468 @@
 <body>
     <form id="form1" runat="server">
         <div class="container">
+            <div class="row" style="border: 3px double #0056b3; padding: 20px; margin: 25px 0 0 0;">
+                <div class="col-12 col-md-4 mb-3">
+                    <label>RCI:</label>
+                    <asp:TextBox ID="rci" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label>RDG:</label>
+                    <asp:TextBox ID="rdg" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label>Total de cuotas directas</label>
+                    <asp:TextBox ID="totalCuotasDirectas" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label>Valor de cuota</label>
+                    <asp:TextBox ID="noCuota" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label>Valor Diferente</label>
+                    <asp:TextBox ID="valorDif" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                    <br />
+                    <asp:TextBox ID="valorDifSub" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3">
+                    <label>RCI Diferente</label>
+                    <asp:TextBox ID="rciDif" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                    <br />
+                    <asp:TextBox ID="rciDifSub" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 mt-3">
+                    <asp:Label ID="detalle" runat="server" disabled="true" CssClass="form-control"></asp:Label>
+                </div>
+            </div>
+            <div class="accordion mt-3" id="accordionDesgloseCuotas">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingDesglose">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDesglose" aria-expanded="false" aria-controls="collapseDesglose">
+                      Desglose de cuotas
+                    </button>
+                  </h2>
+                  <div id="collapseDesglose" class="accordion-collapse collapse" aria-labelledby="headingDesglose" data-bs-parent="#accordionDesgloseCuotas">
+                    <div class="accordion-body">
+                      <table class="table table-bordered">
+                        <tbody>
+                          <tr>
+                            <td>Capital</td>
+                            <td><asp:Label ID="lblCapital" runat="server" /></td>
+                          </tr>
+                          <tr>
+                            <td>Intereses</td>
+                            <td><asp:Label ID="lblIntereses" runat="server" /></td>
+                          </tr>
+                          <tr>
+                            <td>Cuota sin seguros</td>
+                            <td><asp:Label ID="lblCuotaSinSeguros" runat="server" /></td>
+                          </tr>
+                          <tr>
+                            <td>Seguro de vida</td>
+                            <td><asp:Label ID="lblSeguroVida" runat="server" /></td>
+                          </tr>
+                          <tr>
+                            <td>Seguro de daños</td>
+                            <td><asp:Label ID="lblSeguroDanios" runat="server" /></td>
+                          </tr>
+                          <tr>
+                            <td>Cuota total</td>
+                            <td><asp:Label ID="lblCuotaTotal" runat="server" /></td>
+                          </tr>
+                          <tr>
+                            <td>Endeudamiento Interno</td>
+                            <td><asp:Label ID="lblEndeudamientoInterno" runat="server" /></td>
+                          </tr>
+                          <tr>
+                            <td>Endeudamiento Externo</td>
+                            <td><asp:Label ID="lblEndeudamientoExterno" runat="server" /></td>
+                          </tr>
+                          <tr>
+                            <td>Cuotas vigentes</td>
+                            <td><asp:Label ID="lblCuotasVigentes" runat="server" /></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <hr />
             <div class="row">
-            </div>
-            <div class="row" style="margin-top:25px">
-                <div class="col-2">
-                    <div class="row group">
-                        <label class="">Destino Credito</label>
-                        <asp:DropDownList CssClass="cotizador" runat="server" ID="destinoCredito" AutoPostBack="true" onchange="">
-                            <asp:ListItem>Compra de Vivienda</asp:ListItem>
-                            <asp:ListItem>Consolidación de deudas</asp:ListItem>
-                            <asp:ListItem>Mixto</asp:ListItem>
-                            <asp:ListItem>FHA</asp:ListItem>
-                            <asp:ListItem>Compra de terreno</asp:ListItem>
-                            <asp:ListItem>Construcción</asp:ListItem>
-                            <asp:ListItem>Remodelación</asp:ListItem>
-                            <asp:ListItem>LIP FHA</asp:ListItem>
-                            <asp:ListItem>LIP DIRECTO</asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
-                    <div class="row group">
-                        <label class="">Monto Solicitado</label>
-                        <asp:TextBox CssClass="cotizador" TextMode="Number" ID="montoSolicitado" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="row group">
-                        <label class="">Antiguedad de Garantía</label>
-                        <asp:DropDownList CssClass="cotizador" runat="server" ID="tipoGarantia">
-                            <asp:ListItem>Nueva</asp:ListItem>
-                            <asp:ListItem>Usada</asp:ListItem>
-                            <asp:ListItem>Terreno</asp:ListItem>
-                            <asp:ListItem>LIP FHA</asp:ListItem>
-                            <asp:ListItem>LIP DIRECTO</asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
-                    <div class="row group">
-                        <label class="">Tasa Interes</label>
-                        <asp:TextBox ID="tasaInteres" runat="server" disabled="true"></asp:TextBox>
-                    </div>
-                    <div class="row group">
-                        <label class="">Plazo</label>
-                        <asp:TextBox CssClass="cotizador" TextMode="Number" ID="plazoMeses" runat="server" min="1"></asp:TextBox>
-                    </div>
-                    <div class="row">
-                    </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Destino Crédito</label>
+                    <asp:DropDownList CssClass="form-control cotizador" runat="server" ID="destinoCredito" AutoPostBack="true">
+                        <asp:ListItem>Compra de Vivienda</asp:ListItem>
+                        <asp:ListItem>Consolidación de deudas</asp:ListItem>
+                        <asp:ListItem>Mixto</asp:ListItem>
+                        <asp:ListItem>FHA</asp:ListItem>
+                        <asp:ListItem>Compra de terreno</asp:ListItem>
+                        <asp:ListItem>Construcción</asp:ListItem>
+                        <asp:ListItem>Remodelación</asp:ListItem>
+                        <asp:ListItem>LIP FHA</asp:ListItem>
+                        <asp:ListItem>LIP DIRECTO</asp:ListItem>
+                    </asp:DropDownList>
                 </div>
-                <div class="col-10">
-                    <div class="form-container2" runat="server" style="border: 3px double #0056b3;">
-                        <div class="form-group">
-                            <label>RCI:</label>
-                            <asp:TextBox ID="rci" runat="server" disabled="true"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <label>RDG:</label>
-                            <asp:TextBox ID="rdg" runat="server" disabled="true"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <label>Total de cuotas directas</label>
-                            <asp:TextBox ID="totalCuotasDirectas" runat="server" disabled="true"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <label>No. de cuota</label>
-                            <asp:TextBox ID="noCuota" runat="server" disabled="true"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <label>Valor Diferente</label>
-                            <asp:TextBox ID="valorDif" runat="server" disabled="true"></asp:TextBox>
-                            <br />
-                            <asp:TextBox ID="valorDifSub" runat="server" disabled="true"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <label>RCI Diferente</label>
-                            <asp:TextBox ID="rciDif" runat="server" disabled="true"></asp:TextBox>
-                            <br />
-                            <asp:TextBox ID="rciDifSub" runat="server" disabled="true"></asp:TextBox>
-                        </div>
-                        <div style="grid-column-start: span 3; padding: 10px" >
-                            <asp:label ID="detalle" runat="server" disabled="true"></asp:label>
-                        </div>
-                    </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Monto Solicitado</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" ID="montoSolicitado" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Antigüedad de Garantía</label>
+                    <asp:DropDownList CssClass="form-control cotizador" runat="server" ID="tipoGarantia">
+                        <asp:ListItem>Nueva</asp:ListItem>
+                        <asp:ListItem>Usada</asp:ListItem>
+                        <asp:ListItem>Terreno</asp:ListItem>
+                        <asp:ListItem>LIP FHA</asp:ListItem>
+                        <asp:ListItem>LIP DIRECTO</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Tasa Interés %</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" ID="tasaInteres" runat="server" TextMode="Number" min="0" step="0.01"></asp:TextBox>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Plazo</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" ID="plazoMeses" runat="server" min="1"></asp:TextBox>
+                    <asp:Label ID="lblPlazoAdvertencia" runat="server" CssClass="text-danger" Style="font-size: 12px;"></asp:Label>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Tipo de Cuota</label>
+                    <asp:DropDownList CssClass="form-control cotizador" runat="server" ID="tipoCuota">
+                        <asp:ListItem Value="nivelada">Cuota Nivelada</asp:ListItem>
+                        <asp:ListItem Value="saldos">Cuota sobre saldos</asp:ListItem>
+                    </asp:DropDownList>
                 </div>
             </div>
-           <div class="col-3">
-                <button style="margin-top:10px" Class="btn btn-primary" runat="server" id="btnArchivos" OnClick="cargarListaArchivos(); return false;">Archivos</button>
+            <div class="row mb-2">
+                <div class="col-12">
+                    <button style="margin-top:10px" Class="btn btn-primary" runat="server" id="btnArchivos" OnClick="cargarListaArchivos(); return false;">Editar tasas</button>
+                </div>
             </div>
             <hr />
             <div class="row">
-                <div class="col-4" style="display: flex; flex-direction: column">
-                    <label class="">Actividad Economica</label>
-                    <asp:DropDownList CssClass="cotizador" runat="server" ID="actividad">
+                <h3>Ingresos</h3>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Actividad Económica</label>
+                    <asp:DropDownList CssClass="form-control cotizador" runat="server" ID="actividad">
                         <asp:ListItem>Relacion de dependencia</asp:ListItem>
                         <asp:ListItem>Negocio propio</asp:ListItem>
                         <asp:ListItem>Servicios profesionales</asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Ingreso Constancia</label>
-                    <asp:TextBox TextMode="Number" CssClass="cotizador" runat="server" ID="ingresoConstancia" min="0"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" runat="server" ID="ingresoConstancia" min="0"></asp:TextBox>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
-                    <label class="">Bonificacion</label>
-                    <asp:TextBox TextMode="Number" CssClass="cotizador" runat="server" ID="bonificacionActividadEconomica"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Bonificación</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" runat="server" ID="bonificacionActividadEconomica"></asp:TextBox>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
-                    <label class="">Iggs</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="iggsActividadEconomica" min="0"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">IGGS</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="iggsActividadEconomica" min="0"></asp:TextBox>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
-                    <label class="">Isr</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="isrActividadEconomica" min="0"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">ISR</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="isrActividadEconomica" min="0"></asp:TextBox>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Comisiones</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="comisionesActividadEconomica"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="comisionesActividadEconomica"></asp:TextBox>
                 </div>
             </div>
             <div class="row">
-                <div class="col-4" style="display: flex; flex-direction: column">
-                    <label class="">Activida Economica 2</label>
-                    <asp:DropDownList CssClass="cotizador" runat="server" ID="actividad2">
-                        <asp:ListItem></asp:ListItem>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Actividad Económica 2</label>
+                    <asp:DropDownList CssClass="form-control cotizador" runat="server" ID="actividad2">
+                        <asp:ListItem></asp:ListItem>    
                         <asp:ListItem>Relacion de dependencia</asp:ListItem>
                         <asp:ListItem>Negocio propio</asp:ListItem>
                         <asp:ListItem>Servicios profesionales</asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Ingreso Constancia</label>
-                    <asp:TextBox TextMode="Number" CssClass="cotizador" runat="server" ID="ingresoConstancia2"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" runat="server" ID="ingresoConstancia2"></asp:TextBox>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
-                    <label class="">Bonificacion</label>
-                    <asp:TextBox TextMode="Number" CssClass="cotizador" runat="server" ID="bonificacionActividadEconomica2"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Bonificación</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" runat="server" ID="bonificacionActividadEconomica2"></asp:TextBox>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
-                    <label class="">Iggs</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="iggsActividadEconomica2"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">IGGS</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="iggsActividadEconomica2"></asp:TextBox>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
-                    <label class="">Isr</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="isrActividadEconomica2"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">ISR</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="isrActividadEconomica2"></asp:TextBox>
                 </div>
-                <div class="col-4" style="display: flex; flex-direction: column">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Comisiones</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="comisionesActividadEconomica2"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="comisionesActividadEconomica2"></asp:TextBox>
                 </div>
             </div>
             <hr />
             <div class="row">
                 <h3>Descuentos</h3>
-                <div class="col-6 col-md-3">
-                    <label class="" style="display: flex; flex-direction: column">Descuento Constancia</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="descuentoConstancia"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Descuento Constancia</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="descuentoConstancia"></asp:TextBox>
                 </div>
-                <div class="col-6 col-md-3">
-                    <label class="" style="display: flex; flex-direction: column">Auxilio Postumo</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="auxilioPostumo"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Auxilio Póstumo</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="auxilioPostumo"></asp:TextBox>
                 </div>
-                <div class="col-6 col-md-3">
-                    <label class="" style="display: flex; flex-direction: column">Montepio</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="montepio"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Montepio</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="montepio"></asp:TextBox>
                 </div>
-                <div class="col-6 col-md-3" style="display: flex; flex-direction: column">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Seguro</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="seguro"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="seguro"></asp:TextBox>
                 </div>
             </div>
             
             <hr />
             <div class="row">
-                <div class="col-6 col-md-3">
-                    <label class="">Tipo Deuda 1</label>
-                    <asp:DropDownList runat="server" CssClass="cotizador" ID="tipoDeuda1">
-                        <asp:ListItem></asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
-                        <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
-                        <asp:ListItem>Factorje Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
-                        <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
-                    </asp:DropDownList>
+                <h3>Deudas</h3>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Tipo Deuda 1</label>
+                        <asp:DropDownList runat="server" CssClass="form-control cotizador" ID="tipoDeuda1">
+                            <asp:ListItem></asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
+                            <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
+                            <asp:ListItem>Factorje Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
+                            <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Saldo de Deuda 1</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="saldoDeuda1"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Límite Tarjeta 1</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="limiteTarjeta1"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Cuota Deuda 1</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="cuotaDeuda1"></asp:TextBox>
+                    </div>
                 </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Saldo de Deuda 1</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="saldoDeuda1"></asp:TextBox>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Tipo Deuda 2</label>
+                        <asp:DropDownList runat="server" CssClass="form-control cotizador" ID="tipoDeuda2">
+                            <asp:ListItem></asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
+                            <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
+                            <asp:ListItem>Factorje Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
+                            <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Saldo de Deuda 2</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="saldoDeuda2"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Límite Tarjeta 2</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="limiteTarjeta2"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Cuota Deuda 2</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="cuotaDeuda2"></asp:TextBox>
+                    </div>
                 </div>
-                <div class="col-6 col-md-3" id="divLimiteTarjeta1">
-                    <label class="">Limite Tarjeta 1</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="limiteTarjeta1"></asp:TextBox>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Tipo Deuda 3</label>
+                        <asp:DropDownList runat="server" CssClass="form-control cotizador" ID="tipoDeuda3">
+                            <asp:ListItem></asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
+                            <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
+                            <asp:ListItem>Factorje Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
+                            <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Saldo de Deuda 3</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="saldoDeuda3"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Límite Tarjeta 3</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="limiteTarjeta3"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Cuota Deuda 3</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="cuotaDeuda3"></asp:TextBox>
+                    </div>
                 </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Cuota Deuda 1</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="cuotaDeuda1"></asp:TextBox>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Tipo Deuda 4</label>
+                        <asp:DropDownList runat="server" CssClass="form-control cotizador" ID="tipoDeuda4">
+                            <asp:ListItem></asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
+                            <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
+                            <asp:ListItem>Factorje Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
+                            <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Saldo de Deuda 4</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="saldoDeuda4"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Límite Tarjeta 4</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="limiteTarjeta4"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Cuota Deuda 4</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="cuotaDeuda4"></asp:TextBox>
+                    </div>
                 </div>
-                
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Tipo Deuda 5</label>
+                        <asp:DropDownList runat="server" CssClass="form-control cotizador" ID="tipoDeuda5">
+                            <asp:ListItem></asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
+                            <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
+                            <asp:ListItem>Factorje Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
+                            <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Saldo de Deuda 5</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="saldoDeuda5"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Límite Tarjeta 5</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="limiteTarjeta5"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Cuota Deuda 5</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="cuotaDeuda5"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Tipo Deuda 6</label>
+                        <asp:DropDownList runat="server" CssClass="form-control cotizador" ID="tipoDeuda6">
+                            <asp:ListItem></asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
+                            <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
+                            <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
+                            <asp:ListItem>Factorje Fiduciario</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
+                            <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
+                            <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
+                            <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Saldo de Deuda 6</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="saldoDeuda6"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Límite Tarjeta 6</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="limiteTarjeta6"></asp:TextBox>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <label class="">Cuota Deuda 6</label>
+                        <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="cuotaDeuda6"></asp:TextBox>
+                    </div>
+                </div>  
+            </div>
+            <hr />
+            <div class="row mb-2">
+                <div class="col-12">
+                    <label class="fw-bold">Estados de Cuenta</label>
+                </div>
             </div>
             <div class="row">
-                <div class="col-6 col-md-3">
-                    <label class="">Tipo Deuda 2</label>
-                    <asp:DropDownList runat="server" CssClass="cotizador" ID="tipoDeuda2">
-                        <asp:ListItem></asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
-                        <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
-                        <asp:ListItem>Factorje Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
-                        <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
-                    </asp:DropDownList>
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
+                    <label class="">Estado cuenta Mes 1</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="mes1"></asp:TextBox>
                 </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Saldo de Deuda 2</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="saldoDeuda2"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
+                    <label class="">Estado cuenta Mes 2</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="mes2"></asp:TextBox>
                 </div>
-                <div class="col-6 col-md-3">
-                    <label class="" ID="divLimiteTarjeta2">Limite Tarjeta 2</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="limiteTarjeta2"></asp:TextBox>
-                </div>
-     
-                   
-                <div class="col-6 col-md-3">
-                    <label class="">Cuota Deuda 2</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="cuotaDeuda2"></asp:TextBox>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 col-md-3">
-                    <label class="">Tipo Deuda 3</label>
-                    <asp:DropDownList runat="server" CssClass="cotizador" ID="tipoDeuda3">
-                        <asp:ListItem></asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
-                        <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
-                        <asp:ListItem>Factorje Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
-                        <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Saldo de Deuda 3</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="saldoDeuda3"></asp:TextBox>
-                </div>
-                <div class="col-6 col-md-3" id="divLimiteTarjeta3">
-                    <label class="">Limite Tarjeta 3</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="limiteTarjeta3"></asp:TextBox>
-                </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Cuota Deuda 3</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="cuotaDeuda3"></asp:TextBox>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 col-md-3">
-                    <label class="">Tipo Deuda 4</label>
-                    <asp:DropDownList runat="server" CssClass="cotizador" ID="tipoDeuda4">
-                        <asp:ListItem></asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
-                        <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
-                        <asp:ListItem>Factorje Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
-                        <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
-                    </asp:DropDownList>
-
-                </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Saldo de Deuda 4</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="saldoDeuda4"></asp:TextBox>
-                </div>
-                <div class="col-6 col-md-3" id="divLimiteTarjeta4">
-                    <label class="">Limite Tarjeta 4</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="limiteTarjeta4"></asp:TextBox>
-                </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Cuota Deuda 4</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="cuotaDeuda4"></asp:TextBox>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 col-md-3">
-                    <label class="">Tipo Deuda 5</label>
-                    <asp:DropDownList runat="server" CssClass="cotizador" ID="tipoDeuda5">
-                        <asp:ListItem></asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
-                        <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
-                        <asp:ListItem>Factorje Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
-                        <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Saldo de Deuda 5</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="saldoDeuda5"></asp:TextBox>
-                </div>
-                <div class="col-6 col-md-3" id="divLimiteTarjeta5">
-                    <label class="">Limite Tarjeta 5</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="limiteTarjeta5"></asp:TextBox>
-                </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Cuota Deuda 5</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="cuotaDeuda5"></asp:TextBox>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 col-md-3">
-                    <label class="">Tipo Deuda 6</label>
-                    <asp:DropDownList runat="server" CssClass="cotizador" ID="tipoDeuda6">
-                        <asp:ListItem></asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Interna</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Mayor a 9 m</asp:ListItem>
-                        <asp:ListItem>Tarjeta de Credito Menor a 9m</asp:ListItem>
-                        <asp:ListItem>Prestamo Hipotecario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario Indirecto Bantrab</asp:ListItem>
-                        <asp:ListItem>Factorje Fiduciario</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles</asp:ListItem>
-                        <asp:ListItem>Prestamo Bienes Inmuebles - Prendas</asp:ListItem>
-                        <asp:ListItem>Prestamo Fiduciario - Prendas</asp:ListItem>
-                        <asp:ListItem>Fiduciaria Otras Garantias</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Saldo de Deuda 6</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="saldoDeuda6"></asp:TextBox>
-                </div>
-                <div class="col-6 col-md-3" id="divLimiteTarjeta6">
-                    <label >Limite Tarjeta 6</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="limiteTarjeta6"></asp:TextBox>
-                </div>
-                <div class="col-6 col-md-3">
-                    <label class="">Cuota Deuda 6</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="cuotaDeuda6"></asp:TextBox>
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
+                    <label class="">Estado cuenta Mes 3</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="mes3"></asp:TextBox>
                 </div>
             </div>
             <hr />
+            <div class="row mb-2">
+                <div class="col-12">
+                    <label class="fw-bold">Garantías</label>
+                </div>
+            </div>
             <div class="row">
-                <div class="col-3">
-                <label class="">Estado cuenta Mes 1</label>
-                <asp:TextBox CssClass="cotizador" runat="server" ID="mes1"></asp:TextBox>
-
+                <div class="col-12 col-sm-6 mb-3">
+                    <label class="">Terreno Garantía</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="terreno"></asp:TextBox>
                 </div>
-                <div class="col-3">
-                <label class="">Estado cuenta Mes 2</label>
-                <asp:TextBox CssClass="cotizador" runat="server" ID="mes2"></asp:TextBox>
-
+                <div class="col-12 col-sm-6 mb-3">
+                    <label class="">Construcciones Garantía</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="construccion"></asp:TextBox>
                 </div>
-                <div class="col-3">
-                <label class="">Estado cuenta Mes 3</label>
-                <asp:TextBox CssClass="cotizador" runat="server" ID="mes3"></asp:TextBox></div>
             </div>
             <hr />
-            <div class="row">
-                <div class="col-3">
-                    <label class="">Terreno Garantia</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="terreno"></asp:TextBox>
+            <div class="row mb-2">
+                <div class="col-12">
+                    <label class="fw-bold">Clasificaciones y Score</label>
                 </div>
-                <div class="col-3">
-                    <label class="">Construcciones Garantia</label>
-                    <asp:TextBox CssClass="cotizador" runat="server" ID="construccion"></asp:TextBox>
-                </div>           
             </div>
-            <div class="row" style="align-items: center;">
-                <div class="col-3">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <label class="">Score Predictivo</label>
-                    <asp:TextBox runat="server" ID="scorePredictivo"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="scorePredictivo"></asp:TextBox>
                 </div>
-                <div class="col-3" >
-                    <label class="">Clasificacion SIB</label>
-                    <asp:DropDownList runat="server" ID="clasificacionSIB">
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
+                    <label class="">Clasificación SIB</label>
+                    <asp:DropDownList CssClass="form-control cotizador" runat="server" ID="clasificacionSIB">
                         <asp:ListItem></asp:ListItem>
                         <asp:ListItem>A</asp:ListItem>
                         <asp:ListItem>B</asp:ListItem>
@@ -486,9 +493,9 @@
                         <asp:ListItem>S/C</asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <div class="col-3" >
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <label class="">Conteo CCR</label>
-                    <asp:DropDownList runat="server" ID="conteoCCR">
+                    <asp:DropDownList CssClass="form-control cotizador" runat="server" ID="conteoCCR">
                         <asp:ListItem></asp:ListItem>
                         <asp:ListItem>1</asp:ListItem>
                         <asp:ListItem>2</asp:ListItem>
@@ -505,33 +512,45 @@
             </div>
         </div>
         <br />
-        
         <div class="modal fade" id="modalArchivo" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Archivos</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mt-4">
-                        <h2>Lista de Archivos</h2>
-                        <ul id="listaArchivos" class="list-group"></ul>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Archivos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <div class="row">
-                        <textarea id="contenidoArchivo" class="form-control" rows="10"></textarea>
+                    <div class="modal-body">
+                        <div class="row mt-4">
+                            <h2>Lista de Archivos</h2>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Archivo</th>
+                                            <th>Descripción</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listaArchivos">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <textarea id="contenidoArchivo" class="form-control" rows="10" style="width: 100%;"></textarea>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="guardarArchivo">Guardar Cambios</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="guardarArchivo">Guardar Cambios</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
         <div class="modal fade" id="modalAdvertencia" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalTitulo">Cotizador</h5>
@@ -544,16 +563,11 @@
                 </div>
             </div>
         </div>
-
+   
     </form>
 </body>
 
     <script>
-
-        $(document).ready(function () {
-
-        });
-
         var dropdowns = document.querySelectorAll(".cotizador");
         var btn = document.getElementById("btnCotizador");
 
@@ -569,62 +583,13 @@
                     if (validarId("actividad2"))
                         return Alerta("Faltante de Informacion: Actividad Economica 2")
 
-                if (ddl.id == "tipoDeuda1" && ddl.value == "Tarjeta de Credito Menor a 9m") {
-                    document.getElementById("limiteTarjeta1").className = "mostrarElemento";
-                }
-                //if (ddl.id == "tipoDeuda2" && ddl.value == "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta2").className = "mostrarElemento";
-                //}
-                //if (ddl.id == "tipoDeuda3" && ddl.value == "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta3").className = "mostrarElemento";
-                //}
-                //if (ddl.id == "tipoDeuda4" && ddl.value == "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta4").className = "mostrarElemento";
-                //}
-                //if (ddl.id == "tipoDeuda5" && ddl.value == "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta5").className = "mostrarElemento";
-                //}
-                //if (ddl.id == "tipoDeuda6" && ddl.value == "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta6").className = "mostrarElemento";
-                //}
-
-                if (ddl.id == "tipoDeuda1" && ddl.value != "Tarjeta de Credito Menor a 9m") {
-                    document.getElementById("limiteTarjeta1").className = "ocultarElemento";
-                }
-                //if (ddl.id == "tipoDeuda2" && ddl.value != "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta2").className = "ocultarElemento";
-                //}
-                //if (ddl.id == "tipoDeuda3" && ddl.value != "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta3").className = "ocultarElemento";
-                //}
-                //if (ddl.id == "tipoDeuda4" && ddl.value != "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta4").className = "ocultarElemento";
-                //}
-                //if (ddl.id == "tipoDeuda5" && ddl.value != "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta5").className = "ocultarElemento";
-                //}
-                //if (ddl.id == "tipoDeuda6" && ddl.value != "Tarjeta de Credito Menor a 9m") {
-                //    document.getElementById("divLimiteTarjeta6z").className = "ocultarElemento";
-                //}
-
-                if ($("#tipoDeuda1").val() != "") {
-                    if ($("#tipoDeuda1").val() == "Tarjeta de Credito Menor a 9m") {
-                        document.getElementById("limiteTarjeta1").classList.add("mostrarElemento");
-                        document.getElementById("limiteTarjeta1").classList.remove("ocultarelemento");
-                    }
-                    else {
-                        document.getElementById("limiteTarjeta1").classList.remove("mostrarElemento");
-                        document.getElementById("limiteTarjeta1").classList.add("ocultarelemento");
-                    }
-                    if ($("#tipoDeuda1").val() != "")
-                        if (validarId("saldoDeuda1"))
-                            return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-                    if ($("#saldoDeuda1").val() != "")
-                        if (validarId("tipoDeuda1"))
-                            return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-                } 
-                   
-
+                if ($("#tipoDeuda1").val() != "")
+                    if (validarId("saldoDeuda1"))
+                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
+                if ($("#saldoDeuda1").val() != "")
+                    if (validarId("tipoDeuda1"))
+                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
+            
                 if ($("#tipoDeuda2").val() != "")
                     if (validarId("saldoDeuda2"))
                         return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
@@ -679,11 +644,19 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    
                     $("#listaArchivos").empty();
                     response.d.forEach(archivo => {
-                        
-                        $("#listaArchivos").append(`<li class="list-group-item archivo-item" data-nombre="${archivo}">${archivo}</li>`);
+                        $("#listaArchivos").append(`
+                            <tr>
+                                <td>${archivo.Nombre}</td>
+                                <td>${archivo.Descripcion}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary archivo-item" data-nombre="${archivo.Nombre}">
+                                        Editar
+                                    </button>
+                                </td>
+                            </tr>
+                        `);
                     });
                     $("#modalArchivo").modal("show");
                 }
@@ -727,7 +700,6 @@
             });
         });
 
-
         function validarId(id) {
             if ($("#"+id).val() != "")
                 return false
@@ -738,79 +710,22 @@
             $("#modalMensaje").text(mensaje);
             $("#modalAdvertencia").modal("show");
         }
-
-
-
-
     </script>
-
-<%--    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function () {
-            let scorePredictivo = document.getElementById("scorePredictivo");
-            let SIB = document.getElementById("clasificacionSIB");
-            let CCR = document.getElementById("conteoCCR");
-
-            if (scorePredictivo) {
-                scorePredictivo.addEventListener("input", function () {
-                    let value = parseFloat(scorePredictivo.value);
-                    if (!isNaN(value)) {
-                        if (value >= 0 && value <= 565) {
-                            scorePredictivo.style.backgroundColor = "#ffcccc"; // Rojo claro
-                        } else {
-                            scorePredictivo.style.backgroundColor = "#ccffcc"; // Verde claro
-                        }
-                    } else {
-                        scorePredictivo.style.backgroundColor = ""; // Sin color si no es un número
-                    }
-                });
-            }
-            if (SIB) {
-                SIB.addEventListener("input", function () {
-                    let value = parseFloat(SIB.value);
-                    if (!isNaN(value)) {
-                        switch (value) {
-                            case 'A':
-                                SIB.style.backgroundColor = "#ccffcc"; // Verde claro
-                                break;
-                            case 'B':
-                                SIN.style.backgroundColor = "#ffe599"; // Amarillo
-                                break;
-                            default:
-                                SIN.style.backgroundColor = "#ffcccc"; // Rojo claro
-                        }
-                    }
-                    else {
-                        scorePredictivo.style.backgroundColor = ""; // Sin color si no es un número
-                    }
-                    
-            });
-        }
-            if (CCR) {
-                CCR.addEventListener("input", function () {
-                    let value = parseFloat(CCR.value);
-
-                    if (!isNaN(value)) {
-                        CCR.style.backgroundColor = "#ffcccc"; // Rojo claro
-                    }
-                    else {
-                        scorePredictivo.style.backgroundColor = ""; // Sin color si no es un número
-                    }
-            });
-        }
-    });
-    </script>--%>
 
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
-
-            var txt = document.getElementById("scorePredictivo");
+        var txt = document.getElementById("scorePredictivo");
         if (txt) {
             txt.addEventListener("input", function () {
                 var value = parseFloat(txt.value);
                 if (!isNaN(value)) {
-                    if (value >= 0 && value <= 500) {
+                    if (value >= 0 && value <= 565) {
                         txt.style.backgroundColor = "#ffcccc"; // Rojo claro
-                    } else {
+                    }
+                    else if (value < 0) {
+                        txt.style.backgroundColor = "#ffffcc"; // amarillo claro
+                    }
+                    else {
                         txt.style.backgroundColor = "#ccffcc"; // Verde claro
                     }
                 } else {
@@ -845,10 +760,19 @@
                 }
             });
         }
-
     });
     </script>
 
-
-
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.solo-numeros').forEach(function(input) {
+        input.addEventListener('input', function(e) {
+          this.value = this.value.replace(/[^0-9.]/g, '');
+          if ((this.value.match(/\./g) || []).length > 1) {
+            this.value = this.value.substring(0, this.value.length - 1);
+          }
+        });
+      });
+    });
+    </script>
 </html>
