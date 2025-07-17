@@ -48,7 +48,8 @@ Partial Class ConsumirWeb
                     "&strIsrActividadEconomica2=" + isrActividadEconomica2.Text +
                     "&strComisionesActividadEconomica=" + comisionesActividadEconomica.Text +
                     "&strComisionesActividadEconomica2=" + comisionesActividadEconomica2.Text +
-                    "&strTasaInteres=" + tasaInteres.Text + "&strTipoCuota=" + tipoCuota.SelectedValue
+                    "&strTasaInteres=" + tasaInteres.Text + "&strTipoCuota=" + tipoCuota.SelectedValue +
+                    "&strTasaReferenciaLIP=" + tasaReferenciaLIP.Text
 
             Dim response As HttpResponseMessage = client.GetAsync(url).Result
 
@@ -72,11 +73,10 @@ Partial Class ConsumirWeb
                 'Dim igssActividadEconomica2 As String = xmlDoc.SelectSingleNode("//igssActividadEconomica2").InnerText
                 'Dim isrActividadEconomica2 As String = xmlDoc.SelectSingleNode("//isrActividadEconomica2").InnerText
                 Dim cuota As String = xmlDoc.SelectSingleNode("//cuota").InnerText
-                totalCuotasDirectas.Text = xmlDoc.SelectSingleNode("//totalCuentasDirectas").InnerText
+                ' totalCuotasDirectas ya no se usa, se eliminó del frontend
                 Dim valorGarantiaHipotecaria As String = xmlDoc.SelectSingleNode("//valorGarantiaHipotecaria").InnerText
                 rdg.Text = xmlDoc.SelectSingleNode("//rdg").InnerText
-                Dim valores As String = xmlDoc.SelectSingleNode("//valorDiferente").InnerText
-                Dim rcis As String = xmlDoc.SelectSingleNode("//rciDiferente").InnerText
+                ' Los campos valorDiferente y rciDiferente ya no se usan, se reemplazaron por los nuevos campos RCI
                 Dim trfLip As String = xmlDoc.SelectSingleNode("//trfLip").InnerText
                 ' Mostrar el detalle
                 detalle.Text = xmlDoc.SelectSingleNode("//detalle").InnerText
@@ -92,13 +92,44 @@ Partial Class ConsumirWeb
                 ' Mostrar mensaje de advertencia si existe
                 lblPlazoAdvertencia.Text = xmlDoc.SelectSingleNode("//plazoAdvertencia").InnerText
 
-                If Not String.IsNullOrEmpty(valores) Then
-                    valorDif.Text = valores.Split("|"c)(0)
-                    valorDifSub.Text = valores.Split("|"c)(1)
+                ' Procesar los nuevos campos RCI según plazo
+                If xmlDoc.SelectSingleNode("//rci1al48") IsNot Nothing Then
+                    rci1al48.Text = xmlDoc.SelectSingleNode("//rci1al48").InnerText
                 End If
-                If Not String.IsNullOrEmpty(rcis) Then
-                    rciDif.Text = rcis.Split("|"c)(0)
-                    rciDifSub.Text = rcis.Split("|"c)(1)
+                If xmlDoc.SelectSingleNode("//rci1al48Total") IsNot Nothing Then
+                    rci1al48Total.Text = xmlDoc.SelectSingleNode("//rci1al48Total").InnerText
+                End If
+                If xmlDoc.SelectSingleNode("//rci49al84") IsNot Nothing Then
+                    rci49al84.Text = xmlDoc.SelectSingleNode("//rci49al84").InnerText
+                End If
+                If xmlDoc.SelectSingleNode("//rci49al84Total") IsNot Nothing Then
+                    rci49al84Total.Text = xmlDoc.SelectSingleNode("//rci49al84Total").InnerText
+                End If
+                If xmlDoc.SelectSingleNode("//rci85mas") IsNot Nothing Then
+                    rci85mas.Text = xmlDoc.SelectSingleNode("//rci85mas").InnerText
+                End If
+                If xmlDoc.SelectSingleNode("//rci85masTotal") IsNot Nothing Then
+                    rci85masTotal.Text = xmlDoc.SelectSingleNode("//rci85masTotal").InnerText
+                End If
+
+                ' Procesar los campos de cuota
+                If xmlDoc.SelectSingleNode("//cuota1al48Cliente") IsNot Nothing Then
+                    cuota1al48Cliente.Text = xmlDoc.SelectSingleNode("//cuota1al48Cliente").InnerText
+                End If
+                If xmlDoc.SelectSingleNode("//cuota1al48Total") IsNot Nothing Then
+                    cuota1al48Total.Text = xmlDoc.SelectSingleNode("//cuota1al48Total").InnerText
+                End If
+                If xmlDoc.SelectSingleNode("//cuota49al84Cliente") IsNot Nothing Then
+                    cuota49al84Cliente.Text = xmlDoc.SelectSingleNode("//cuota49al84Cliente").InnerText
+                End If
+                If xmlDoc.SelectSingleNode("//cuota49al84Total") IsNot Nothing Then
+                    cuota49al84Total.Text = xmlDoc.SelectSingleNode("//cuota49al84Total").InnerText
+                End If
+                If xmlDoc.SelectSingleNode("//cuota85masCliente") IsNot Nothing Then
+                    cuota85masCliente.Text = xmlDoc.SelectSingleNode("//cuota85masCliente").InnerText
+                End If
+                If xmlDoc.SelectSingleNode("//cuota85masTotal") IsNot Nothing Then
+                    cuota85masTotal.Text = xmlDoc.SelectSingleNode("//cuota85masTotal").InnerText
                 End If
 
                 ' Mostrar los cálculos de endeudamiento

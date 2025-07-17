@@ -13,6 +13,13 @@
       font-weight: bold;
       margin-bottom: 2px;
     }
+    .campo-obligatorio-error {
+      border: 2px solid #dc3545 !important;
+      background-color: #fff0f0 !important;
+    }
+    .campo-lip {
+      display: none;
+    }
     </style>
 </head>
 
@@ -22,7 +29,7 @@
 <body>
     <form id="form1" runat="server">
         <div class="container">
-            <div class="row" style="border: 3px double #0056b3; padding: 20px; margin: 25px 0 0 0;">
+            <div class="row" style="border: 3px double #0056b3; padding: 20px; margin: 25px 0 0 0;" id="resultadosContainer">
                 <div class="col-12 col-md-4 mb-3">
                     <label>RCI:</label>
                     <asp:TextBox ID="rci" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
@@ -31,32 +38,71 @@
                     <label>RDG:</label>
                     <asp:TextBox ID="rdg" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
                 </div>
-                <div class="col-12 col-md-4 mb-3">
-                    <label>Total de cuotas directas</label>
-                    <asp:TextBox ID="totalCuotasDirectas" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
-                </div>
+
                 <div class="col-12 col-md-4 mb-3">
                     <label>Valor de cuota</label>
                     <asp:TextBox ID="noCuota" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
                 </div>
-                <div class="col-12 col-md-4 mb-3">
-                    <label>Valor Diferente</label>
-                    <asp:TextBox ID="valorDif" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
-                    <br />
-                    <asp:TextBox ID="valorDifSub" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>Cuota 1-48 (Total)</label>
+                    <asp:TextBox ID="cuota1al48Total" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
                 </div>
-                <div class="col-12 col-md-4 mb-3">
-                    <label>RCI Diferente</label>
-                    <asp:TextBox ID="rciDif" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
-                    <br />
-                    <asp:TextBox ID="rciDifSub" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>Cuota 1-48 (Cliente)</label>
+                    <asp:TextBox ID="cuota1al48Cliente" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>RCI 1-48 (Total)</label>
+                    <asp:TextBox ID="rci1al48Total" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>RCI 1-48 (Cliente)</label>
+                    <asp:TextBox ID="rci1al48" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 mb-3 campo-lip">
+                    <hr style="border-top: 2px solid #0056b3; margin: 20px 0;">
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>Cuota 49-84 (Total)</label>
+                    <asp:TextBox ID="cuota49al84Total" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>Cuota 49-84 (Cliente)</label>
+                    <asp:TextBox ID="cuota49al84Cliente" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>RCI 49-84 (Total)</label>
+                    <asp:TextBox ID="rci49al84Total" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>RCI 49-84 (Cliente)</label>
+                    <asp:TextBox ID="rci49al84" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 mb-3 campo-lip">
+                    <hr style="border-top: 2px solid #0056b3; margin: 20px 0;">
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>Cuota 85+ (Total)</label>
+                    <asp:TextBox ID="cuota85masTotal" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>Cuota 85+ (Cliente)</label>
+                    <asp:TextBox ID="cuota85masCliente" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>RCI 85+ (Total)</label>
+                    <asp:TextBox ID="rci85masTotal" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-12 col-md-4 mb-3 campo-lip">
+                    <label>RCI 85+ (Cliente)</label>
+                    <asp:TextBox ID="rci85mas" runat="server" disabled="true" CssClass="form-control"></asp:TextBox>
                 </div>
                 <div class="col-12 mt-3">
                     <asp:Label ID="detalle" runat="server" disabled="true" CssClass="form-control"></asp:Label>
                 </div>
             </div>
             <div class="accordion mt-3" id="accordionDesgloseCuotas">
-                <div class="accordion-item">
+                <div class="accordion-item" id="desgloseCuotasContainer">
                   <h2 class="accordion-header" id="headingDesglose">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDesglose" aria-expanded="false" aria-controls="collapseDesglose">
                       Desglose de cuotas
@@ -112,7 +158,7 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Destino Crédito</label>
-                    <asp:DropDownList CssClass="form-control cotizador" runat="server" ID="destinoCredito" AutoPostBack="true">
+                    <asp:DropDownList CssClass="form-control cotizador" runat="server" ID="destinoCredito">
                         <asp:ListItem>Compra de Vivienda</asp:ListItem>
                         <asp:ListItem>Consolidación de deudas</asp:ListItem>
                         <asp:ListItem>Mixto</asp:ListItem>
@@ -153,6 +199,10 @@
                         <asp:ListItem Value="nivelada">Cuota Nivelada</asp:ListItem>
                         <asp:ListItem Value="saldos">Cuota sobre saldos</asp:ListItem>
                     </asp:DropDownList>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <label class="">Tasa Referencia LIP %</label>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" ID="tasaReferenciaLIP" runat="server" TextMode="Number" min="0" step="0.01" disabled="true" placeholder="Solo para LIP FHA y LIP DIRECTO"></asp:TextBox>
                 </div>
             </div>
             <div class="row mb-2">
@@ -568,72 +618,51 @@
 </body>
 
     <script>
-        var dropdowns = document.querySelectorAll(".cotizador");
-        var btn = document.getElementById("btnCotizador");
-
-        dropdowns.forEach(function (ddl) {
-            ddl.addEventListener("change", function () {
-                if (validarId("montoSolicitado") || validarId("ingresoConstancia"))
-                    return Alerta("Faltante de Informacion: Monto Solicitado o Actividad Economica")
-
-                if ($("#actividad2").val() != "")
-                    if (validarId("ingresoConstancia2"))
-                        return Alerta("Faltante de Informacion: Actividad Economica 2")
-                if ($("#ingresoConstancia2").val() != "")
-                    if (validarId("actividad2"))
-                        return Alerta("Faltante de Informacion: Actividad Economica 2")
-
-                if ($("#tipoDeuda1").val() != "")
-                    if (validarId("saldoDeuda1"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-                if ($("#saldoDeuda1").val() != "")
-                    if (validarId("tipoDeuda1"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
+        // Auto-ejecutar cotización cuando cambien campos con clase 'cotizador'
+        document.addEventListener('DOMContentLoaded', function() {
+            var btnCotizador = document.getElementById('btnCotizador');
+            var timeoutId = null; // Variable para controlar el timeout
             
-                if ($("#tipoDeuda2").val() != "")
-                    if (validarId("saldoDeuda2"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-                if ($("#saldoDeuda2").val() != "")
-                    if (validarId("tipoDeuda2"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-
-                if ($("#tipoDeuda3").val() != "")
-                    if (validarId("saldoDeuda3"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-                if ($("#saldoDeuda3").val() != "")
-                    if (validarId("tipoDeuda3"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-
-                if ($("#tipoDeuda4").val() != "")
-                    if (validarId("saldoDeuda4"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-                if ($("#saldoDeuda4").val() != "")
-                    if (validarId("tipoDeuda4"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-
-                if ($("#tipoDeuda5").val() != "")
-                    if (validarId("saldoDeuda5"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-                if ($("#saldoDeuda5").val() != "")
-                    if (validarId("tipoDeuda5"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-
-                if ($("#tipoDeuda6").val() != "")
-                    if (validarId("saldoDeuda6"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-                if ($("#saldoDeuda6").val() != "")
-                    if (validarId("tipoDeuda6"))
-                        return Alerta("Faltante de Informacion: Tipo Deuda o Saldo Deuda")
-
-                if (ddl.id == "tipoGarantia") {
-                    document.getElementById("plazoMeses").value = "";
+            // Función para ejecutar cotización automáticamente con debounce
+            function ejecutarCotizacion() {
+                // Cancelar timeout anterior si existe
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
                 }
-
                 
-
-                btn.click();
-
+                // Crear nuevo timeout
+                timeoutId = setTimeout(function() {
+                    if (btnCotizador) {
+                        btnCotizador.click();
+                    }
+                }, 500); // Aumentar delay para evitar múltiples peticiones
+            }
+            
+            // Agregar eventos a todos los campos con clase 'cotizador'
+            var camposCotizador = document.querySelectorAll('.cotizador');
+            camposCotizador.forEach(function(campo) {
+                // Solo agregar eventos si no es el botón mismo
+                if (campo.id !== 'btnCotizador') {
+                    // Solo usar 'change' para evitar múltiples peticiones
+                    campo.addEventListener('change', ejecutarCotizacion);
+                    
+                    // Para campos de texto, usar 'blur' en lugar de 'input' para evitar peticiones mientras se escribe
+                    if (campo.type === 'text' || campo.type === 'number') {
+                        campo.addEventListener('blur', ejecutarCotizacion);
+                    }
+                }
             });
+            
+            // Limpiar plazo cuando cambie tipo de garantía
+            var tipoGarantia = document.getElementById('tipoGarantia');
+            if (tipoGarantia) {
+                tipoGarantia.addEventListener('change', function() {
+                    var plazoMeses = document.getElementById('plazoMeses');
+                    if (plazoMeses) {
+                        plazoMeses.value = '';
+                    }
+                });
+            }
         });
 
         function cargarListaArchivos() {
@@ -767,12 +796,201 @@
     document.addEventListener('DOMContentLoaded', function () {
       document.querySelectorAll('.solo-numeros').forEach(function(input) {
         input.addEventListener('input', function(e) {
-          this.value = this.value.replace(/[^0-9.]/g, '');
-          if ((this.value.match(/\./g) || []).length > 1) {
-            this.value = this.value.substring(0, this.value.length - 1);
+          // Guardar la posición actual del cursor
+          var cursorPos = this.selectionStart;
+          var oldValue = this.value;
+          
+          // Permitir números, un punto decimal y hasta 2 decimales
+          var value = this.value;
+          
+          // Remover caracteres no válidos (solo números y punto)
+          value = value.replace(/[^0-9.]/g, '');
+          
+          // Asegurar que solo haya un punto decimal
+          var dotCount = (value.match(/\./g) || []).length;
+          if (dotCount > 1) {
+            // Si hay más de un punto, mantener solo el primero
+            var parts = value.split('.');
+            value = parts[0] + '.' + parts.slice(1).join('');
+          }
+          
+          // Limitar a máximo 2 decimales después del punto
+          if (value.includes('.')) {
+            var parts = value.split('.');
+            if (parts[1] && parts[1].length > 2) {
+              parts[1] = parts[1].substring(0, 2);
+              value = parts[0] + '.' + parts[1];
+            }
+          }
+          
+          // Solo actualizar si el valor cambió
+          if (value !== oldValue) {
+            this.value = value;
+            
+            // Ajustar la posición del cursor
+            if (cursorPos > value.length) {
+              cursorPos = value.length;
+            }
+            
+            // Restaurar la posición del cursor
+            this.setSelectionRange(cursorPos, cursorPos);
           }
         });
       });
+      
+      // Control de habilitación del campo Tasa Referencia LIP y visibilidad de campos
+      function toggleTasaReferenciaLIP() {
+        var destinoCredito = document.getElementById('destinoCredito');
+        var tasaReferenciaLIP = document.getElementById('tasaReferenciaLIP');
+        var desgloseCuotasContainer = document.getElementById('desgloseCuotasContainer');
+        var resultadosContainer = document.getElementById('resultadosContainer');
+        
+        if (destinoCredito && tasaReferenciaLIP) {
+          var selectedValue = destinoCredito.value;
+          
+          // Habilitar solo si es LIP FHA o LIP DIRECTO
+          if (selectedValue === 'LIP FHA' || selectedValue === 'LIP DIRECTO') {
+            tasaReferenciaLIP.disabled = false;
+            tasaReferenciaLIP.style.backgroundColor = '';
+            tasaReferenciaLIP.classList.remove('campo-obligatorio-error');
+            
+            // Validar si el campo está vacío y marcarlo en rojo
+            if (tasaReferenciaLIP.value === '' || tasaReferenciaLIP.value === '0') {
+              tasaReferenciaLIP.classList.add('campo-obligatorio-error');
+            }
+            
+            // Ocultar desglose de cuotas para LIP
+            if (desgloseCuotasContainer) {
+              desgloseCuotasContainer.style.display = 'none';
+            }
+            
+            // Mostrar campos RCI específicos de LIP
+            if (resultadosContainer) {
+              var camposLIP = resultadosContainer.querySelectorAll('.campo-lip');
+              camposLIP.forEach(function(campo) {
+                campo.style.display = 'block';
+              });
+            }
+          } else {
+            tasaReferenciaLIP.disabled = true;
+            tasaReferenciaLIP.value = '';
+            tasaReferenciaLIP.style.backgroundColor = '#f8f9fa';
+            tasaReferenciaLIP.classList.remove('campo-obligatorio-error');
+            
+            // Mostrar desglose de cuotas para otros destinos
+            if (desgloseCuotasContainer) {
+              desgloseCuotasContainer.style.display = 'block';
+            }
+            
+            // Ocultar campos RCI específicos de LIP
+            if (resultadosContainer) {
+              var camposLIP = resultadosContainer.querySelectorAll('.campo-lip');
+              camposLIP.forEach(function(campo) {
+                campo.style.display = 'none';
+              });
+            }
+          }
+        }
+      }
+      
+      // Ejecutar al cargar la página
+      toggleTasaReferenciaLIP();
+      
+      // Ejecutar cuando cambie el destino de crédito
+      var destinoCredito = document.getElementById('destinoCredito');
+      if (destinoCredito) {
+        destinoCredito.addEventListener('change', toggleTasaReferenciaLIP);
+      }
+      
+      // Quitar error visual cuando el usuario escriba en el campo de tasa de referencia LIP
+      var tasaReferenciaLIP = document.getElementById('tasaReferenciaLIP');
+      if (tasaReferenciaLIP) {
+        tasaReferenciaLIP.addEventListener('input', function() {
+          if (this.value !== '' && this.value !== '0') {
+            this.classList.remove('campo-obligatorio-error');
+          }
+        });
+        
+        tasaReferenciaLIP.addEventListener('blur', function() {
+          var destinoCredito = document.getElementById('destinoCredito');
+          if (destinoCredito && (destinoCredito.value === 'LIP FHA' || destinoCredito.value === 'LIP DIRECTO')) {
+            if (this.value === '' || this.value === '0') {
+              this.classList.add('campo-obligatorio-error');
+            } else {
+              this.classList.remove('campo-obligatorio-error');
+            }
+          }
+        });
+      }
     });
     </script>
+
+    <script>
+$(document).ready(function () {
+    // IDs de campos obligatorios por tramo
+    var camposObligatorios = [
+        // Tramo principal
+        "montoSolicitado", "destinoCredito", "tipoGarantia", "tasaInteres", "plazoMeses", "tipoCuota",
+        // Ingresos
+        "actividad", "ingresoConstancia"
+        // Puedes agregar más campos según la lógica de negocio
+    ];
+    
+    // Función para validar campos obligatorios específicos según destino de crédito
+    function validarCamposEspecificos() {
+        var destinoCredito = document.getElementById('destinoCredito');
+        var tasaReferenciaLIP = document.getElementById('tasaReferenciaLIP');
+        
+        if (destinoCredito && tasaReferenciaLIP) {
+            var selectedValue = destinoCredito.value;
+            
+            // Si es LIP FHA o LIP DIRECTO, validar que tenga tasa de referencia
+            if (selectedValue === 'LIP FHA' || selectedValue === 'LIP DIRECTO') {
+                if (tasaReferenciaLIP.value === '' || tasaReferenciaLIP.value === '0') {
+                    tasaReferenciaLIP.classList.add('campo-obligatorio-error');
+                    return false;
+                } else {
+                    tasaReferenciaLIP.classList.remove('campo-obligatorio-error');
+                }
+            }
+        }
+        return true;
+    }
+
+    // Quitar error al escribir
+    camposObligatorios.forEach(function(id) {
+        $("#" + id).on("input change", function() {
+            if ($(this).val() !== "") {
+                $(this).removeClass("campo-obligatorio-error");
+            }
+        });
+    });
+
+    // Validación visual al enviar
+    $("#btnCotizador").on("click", function (e) {
+        var hayError = false;
+        camposObligatorios.forEach(function(id) {
+            var $campo = $("#" + id);
+            if ($campo.length && ($campo.val() === null || $campo.val().trim() === "")) {
+                $campo.addClass("campo-obligatorio-error");
+                hayError = true;
+            } else {
+                $campo.removeClass("campo-obligatorio-error");
+            }
+        });
+        
+        // Validar campos específicos según destino de crédito
+        if (!validarCamposEspecificos()) {
+            hayError = true;
+        }
+        
+        if (hayError) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        // Si no hay error, permitir submit normal
+    });
+});
+</script>
 </html>
