@@ -22,8 +22,8 @@ Partial Class ConsumirWeb
 
     Public Function ConsumirServicio() As Task
         Dim client As New HttpClient()
-        'Dim url As String = "http://cotizador.esol.com/Cotizador/PrecalificacionCreditos.asmx/ObtenerDatos"
-        Dim url As String = ConfigurationManager.AppSettings("webServiceUrl")
+        Dim url As String = "http://172.16.20.89:84/preCalificador.asmx/ObtenerDatos"
+        'Dim url As String = ConfigurationManager.AppSettings("webServiceUrl")
 
         Try
             client.Timeout = TimeSpan.FromSeconds(30)
@@ -351,7 +351,5 @@ Partial Class ConsumirWeb
     '    End Try
 
     'End Sub
-
-
 
 End Class

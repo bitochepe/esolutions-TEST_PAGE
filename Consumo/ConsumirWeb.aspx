@@ -20,6 +20,15 @@
     .campo-lip {
       display: none;
     }
+    .campo-moneda {
+      text-align: right;
+      font-family: 'Courier New', monospace;
+    }
+    .campo-moneda::before {
+      content: "Q ";
+      color: #666;
+      font-weight: normal;
+    }
     </style>
 </head>
 
@@ -172,7 +181,7 @@
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Monto Solicitado</label>
-                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" ID="montoSolicitado" runat="server"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" ID="montoSolicitado" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Antigüedad de Garantía</label>
@@ -223,11 +232,11 @@
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Ingreso Constancia</label>
-                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" runat="server" ID="ingresoConstancia" min="0"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="ingresoConstancia"></asp:TextBox>
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Bonificación</label>
-                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" runat="server" ID="bonificacionActividadEconomica"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="bonificacionActividadEconomica"></asp:TextBox>
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">IGGS</label>
@@ -254,11 +263,11 @@
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Ingreso Constancia</label>
-                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" runat="server" ID="ingresoConstancia2"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="ingresoConstancia2"></asp:TextBox>
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">Bonificación</label>
-                    <asp:TextBox CssClass="form-control cotizador solo-numeros" TextMode="Number" runat="server" ID="bonificacionActividadEconomica2"></asp:TextBox>
+                    <asp:TextBox CssClass="form-control cotizador solo-numeros" runat="server" ID="bonificacionActividadEconomica2"></asp:TextBox>
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                     <label class="">IGGS</label>
@@ -558,7 +567,9 @@
                 </div>
             </div>
             <div class="row">
-                <asp:Button CssClass="cotizador" runat="server" ID="btnCotizador" Text="COTIZAR" OnClick="btnCotizador_Click" style="display:none;" />
+                <div class="col-12 text-center">
+                    <asp:Button CssClass="btn btn-primary btn-lg" runat="server" ID="btnCotizador" Text="COTIZAR" OnClick="btnCotizador_Click" style="margin: 20px 0; padding: 15px 40px; font-size: 18px; font-weight: bold;" />
+                </div>
             </div>
         </div>
         <br />
@@ -618,42 +629,35 @@
 </body>
 
     <script>
-        // Auto-ejecutar cotización cuando cambien campos con clase 'cotizador'
-        document.addEventListener('DOMContentLoaded', function() {
-            var btnCotizador = document.getElementById('btnCotizador');
-            var timeoutId = null; // Variable para controlar el timeout
+        // Función para limpiar formato de moneda (solo números)
+        function limpiarFormatoMoneda(valor) {
+            if (!valor || valor === '') return '';
+            return valor.toString().replace(/[^\d.-]/g, '');
+        }
+        
+        // Función para limpiar todos los campos de moneda antes de enviar
+        function limpiarCamposMoneda() {
+            var camposMoneda = [
+                'montoSolicitado', 'ingresoConstancia', 'ingresoConstancia2',
+                'bonificacionActividadEconomica', 'iggsActividadEconomica', 'isrActividadEconomica', 'comisionesActividadEconomica',
+                'bonificacionActividadEconomica2', 'iggsActividadEconomica2', 'isrActividadEconomica2', 'comisionesActividadEconomica2',
+                'descuentoConstancia', 'auxilioPostumo', 'montepio', 'seguro',
+                'saldoDeuda1', 'saldoDeuda2', 'saldoDeuda3', 'saldoDeuda4', 'saldoDeuda5', 'saldoDeuda6',
+                'limiteTarjeta1', 'limiteTarjeta2', 'limiteTarjeta3', 'limiteTarjeta4', 'limiteTarjeta5', 'limiteTarjeta6',
+                'cuotaDeuda1', 'cuotaDeuda2', 'cuotaDeuda3', 'cuotaDeuda4', 'cuotaDeuda5', 'cuotaDeuda6',
+                'mes1', 'mes2', 'mes3', 'terreno', 'construccion'
+            ];
             
-            // Función para ejecutar cotización automáticamente con debounce
-            function ejecutarCotizacion() {
-                // Cancelar timeout anterior si existe
-                if (timeoutId) {
-                    clearTimeout(timeoutId);
-                }
-                
-                // Crear nuevo timeout
-                timeoutId = setTimeout(function() {
-                    if (btnCotizador) {
-                        btnCotizador.click();
-                    }
-                }, 500); // Aumentar delay para evitar múltiples peticiones
-            }
-            
-            // Agregar eventos a todos los campos con clase 'cotizador'
-            var camposCotizador = document.querySelectorAll('.cotizador');
-            camposCotizador.forEach(function(campo) {
-                // Solo agregar eventos si no es el botón mismo
-                if (campo.id !== 'btnCotizador') {
-                    // Solo usar 'change' para evitar múltiples peticiones
-                    campo.addEventListener('change', ejecutarCotizacion);
-                    
-                    // Para campos de texto, usar 'blur' en lugar de 'input' para evitar peticiones mientras se escribe
-                    if (campo.type === 'text' || campo.type === 'number') {
-                        campo.addEventListener('blur', ejecutarCotizacion);
-                    }
+            camposMoneda.forEach(function(id) {
+                var campo = document.getElementById(id);
+                if (campo && campo.value) {
+                    campo.value = limpiarFormatoMoneda(campo.value);
                 }
             });
-            
-            // Limpiar plazo cuando cambie tipo de garantía
+        }
+        
+        // Limpiar plazo cuando cambie tipo de garantía
+        document.addEventListener('DOMContentLoaded', function() {
             var tipoGarantia = document.getElementById('tipoGarantia');
             if (tipoGarantia) {
                 tipoGarantia.addEventListener('change', function() {
@@ -966,8 +970,38 @@ $(document).ready(function () {
         });
     });
 
+    // Función para limpiar formato de moneda (solo números)
+    function limpiarFormatoMoneda(valor) {
+        if (!valor || valor === '') return '';
+        return valor.toString().replace(/[^\d.-]/g, '');
+    }
+    
+    // Función para limpiar todos los campos de moneda antes de enviar
+    function limpiarCamposMoneda() {
+        var camposMoneda = [
+            'montoSolicitado', 'ingresoConstancia', 'ingresoConstancia2',
+            'bonificacionActividadEconomica', 'iggsActividadEconomica', 'isrActividadEconomica', 'comisionesActividadEconomica',
+            'bonificacionActividadEconomica2', 'iggsActividadEconomica2', 'isrActividadEconomica2', 'comisionesActividadEconomica2',
+            'descuentoConstancia', 'auxilioPostumo', 'montepio', 'seguro',
+            'saldoDeuda1', 'saldoDeuda2', 'saldoDeuda3', 'saldoDeuda4', 'saldoDeuda5', 'saldoDeuda6',
+            'limiteTarjeta1', 'limiteTarjeta2', 'limiteTarjeta3', 'limiteTarjeta4', 'limiteTarjeta5', 'limiteTarjeta6',
+            'cuotaDeuda1', 'cuotaDeuda2', 'cuotaDeuda3', 'cuotaDeuda4', 'cuotaDeuda5', 'cuotaDeuda6',
+            'mes1', 'mes2', 'mes3', 'terreno', 'construccion'
+        ];
+        
+        camposMoneda.forEach(function(id) {
+            var campo = document.getElementById(id);
+            if (campo && campo.value) {
+                campo.value = limpiarFormatoMoneda(campo.value);
+            }
+        });
+    }
+    
     // Validación visual al enviar
     $("#btnCotizador").on("click", function (e) {
+        // Limpiar formato de moneda antes de validar
+        limpiarCamposMoneda();
+        
         var hayError = false;
         camposObligatorios.forEach(function(id) {
             var $campo = $("#" + id);
@@ -990,6 +1024,174 @@ $(document).ready(function () {
             return false;
         }
         // Si no hay error, permitir submit normal
+    });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    // Función para formatear números como moneda guatemalteca
+    function formatearMoneda(valor) {
+        if (valor === undefined || valor === null || valor === '') return '';
+        
+        // Remover cualquier formato existente
+        valor = valor.toString().replace(/[^\d.-]/g, '');
+        
+        // Convertir a número
+        var numero = parseFloat(valor);
+        if (isNaN(numero)) return '';
+        
+        // Formatear con separadores de miles y dos decimales
+        var valorFormateado = numero.toLocaleString('es-GT', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+        
+        // Agregar símbolo Q al principio
+        return 'Q ' + valorFormateado;
+    }
+    
+    // Función para limpiar formato de moneda (solo números)
+    function limpiarFormatoMoneda(valor) {
+        if (!valor || valor === '') return '';
+        return valor.toString().replace(/[^\d.-]/g, '');
+    }
+    
+    // Aplicar máscaras de moneda a campos de entrada
+    var camposMoneda = [
+        'montoSolicitado', 'ingresoConstancia', 'ingresoConstancia2',
+        'bonificacionActividadEconomica', 'iggsActividadEconomica', 'isrActividadEconomica', 'comisionesActividadEconomica',
+        'bonificacionActividadEconomica2', 'iggsActividadEconomica2', 'isrActividadEconomica2', 'comisionesActividadEconomica2',
+        'descuentoConstancia', 'auxilioPostumo', 'montepio', 'seguro',
+        'saldoDeuda1', 'saldoDeuda2', 'saldoDeuda3', 'saldoDeuda4', 'saldoDeuda5', 'saldoDeuda6',
+        'limiteTarjeta1', 'limiteTarjeta2', 'limiteTarjeta3', 'limiteTarjeta4', 'limiteTarjeta5', 'limiteTarjeta6',
+        'cuotaDeuda1', 'cuotaDeuda2', 'cuotaDeuda3', 'cuotaDeuda4', 'cuotaDeuda5', 'cuotaDeuda6',
+        'mes1', 'mes2', 'mes3', 'terreno', 'construccion'
+    ];
+    
+                    // Aplicar máscaras a campos de entrada
+    camposMoneda.forEach(function(id) {
+        var $campo = $('#' + id);
+        if ($campo.length) {
+            // Agregar clase visual
+            $campo.addClass('campo-moneda');
+            
+            // Validar formato al perder el foco (más simple y sin problemas de cursor)
+            $campo.on('blur', function() {
+                var valor = $(this).val();
+                if (valor && valor !== '') {
+                    // Limpiar cualquier formato existente
+                    valor = valor.replace(/[^\d.-]/g, '');
+                    
+                    // Convertir a número
+                    var numero = parseFloat(valor);
+                    if (!isNaN(numero)) {
+                        // Aplicar formato de moneda
+                        $(this).val(formatearMoneda(numero));
+                    }
+                }
+            });
+            
+            // Limpiar formato al obtener el foco
+            $campo.on('focus', function() {
+                var valor = $(this).val();
+                if (valor && valor !== '') {
+                    // Limpiar formato y mostrar solo números
+                    var numero = parseFloat(limpiarFormatoMoneda(valor));
+                    if (!isNaN(numero)) {
+                        $(this).val(numero.toString());
+                    }
+                }
+            });
+        }
+    });
+    
+    // Formatear campos de resultados como moneda (solo visual)
+    function formatearResultadosMoneda() {
+        var camposResultado = [
+            'noCuota', 'cuota1al48Total', 'cuota1al48Cliente', 'cuota49al84Total', 'cuota49al84Cliente',
+            'cuota85masTotal', 'cuota85masCliente', 'bonificacionActividadEconomica', 'isrActividadEconomica',
+            'iggsActividadEconomica', 'bonificacionActividadEconomica2', 'isrActividadEconomica2', 'iggsActividadEconomica2',
+            'cuotaDeuda1', 'cuotaDeuda2', 'cuotaDeuda3', 'cuotaDeuda4', 'cuotaDeuda5', 'cuotaDeuda6'
+        ];
+        
+        camposResultado.forEach(function(id) {
+            var $campo = $('#' + id);
+            if ($campo.length && $campo.val() !== undefined && $campo.val() !== '') {
+                var numero = parseFloat($campo.val());
+                if (!isNaN(numero)) {
+                    $campo.addClass('campo-moneda');
+                    $campo.val(formatearMoneda(numero));
+                }
+            }
+        });
+        
+        // Formatear campos del desglose de cuotas (Labels) - solo agregar Q
+        var camposDesglose = [
+            'lblCapital', 'lblIntereses', 'lblCuotaSinSeguros', 'lblSeguroVida', 'lblSeguroDanios', 
+            'lblCuotaTotal', 'lblEndeudamientoInterno', 'lblEndeudamientoExterno', 'lblCuotasVigentes'
+        ];
+        
+        camposDesglose.forEach(function(id) {
+            var $campo = $('#' + id);
+            if ($campo.length && $campo.text() !== undefined && $campo.text() !== '') {
+                var texto = $campo.text().trim();
+                // Solo agregar Q si no la tiene ya
+                if (texto && !texto.startsWith('Q')) {
+                    $campo.text('Q ' + texto);
+                }
+            }
+        });
+    }
+    
+    // Formatear resultados después de cargar datos
+    setTimeout(formatearResultadosMoneda, 500);
+    
+    // Formatear resultados después de cada cálculo
+    $(document).on('DOMSubtreeModified', '#resultadosContainer', function() {
+        setTimeout(formatearResultadosMoneda, 100);
+    });
+    
+    // Función para formatear campos de entrada después de cotización
+    function formatearCamposEntradaMoneda() {
+        var camposEntrada = [
+            'montoSolicitado', 'ingresoConstancia', 'ingresoConstancia2',
+            'bonificacionActividadEconomica', 'iggsActividadEconomica', 'isrActividadEconomica', 'comisionesActividadEconomica',
+            'bonificacionActividadEconomica2', 'iggsActividadEconomica2', 'isrActividadEconomica2', 'comisionesActividadEconomica2',
+            'descuentoConstancia', 'auxilioPostumo', 'montepio', 'seguro',
+            'saldoDeuda1', 'saldoDeuda2', 'saldoDeuda3', 'saldoDeuda4', 'saldoDeuda5', 'saldoDeuda6',
+            'limiteTarjeta1', 'limiteTarjeta2', 'limiteTarjeta3', 'limiteTarjeta4', 'limiteTarjeta5', 'limiteTarjeta6',
+            'cuotaDeuda1', 'cuotaDeuda2', 'cuotaDeuda3', 'cuotaDeuda4', 'cuotaDeuda5', 'cuotaDeuda6',
+            'mes1', 'mes2', 'mes3', 'terreno', 'construccion'
+        ];
+        
+        camposEntrada.forEach(function(id) {
+            var $campo = $('#' + id);
+            if ($campo.length && $campo.val() !== undefined && $campo.val() !== '') {
+                var numero = parseFloat($campo.val());
+                if (!isNaN(numero)) {
+                    $campo.val(formatearMoneda(numero));
+                }
+            }
+        });
+    }
+    
+    // Formatear campos de entrada después de cotización
+    setTimeout(formatearCamposEntradaMoneda, 1000);
+    
+    // Formatear campos de entrada cuando cambien los resultados
+    $(document).on('DOMSubtreeModified', '#resultadosContainer', function() {
+        setTimeout(formatearCamposEntradaMoneda, 200);
+    });
+    
+    // Formatear campos de entrada después de postback de ASP.NET
+    $(document).ready(function() {
+        setTimeout(formatearCamposEntradaMoneda, 500);
+    });
+    
+    // Formatear campos de entrada cuando se complete cualquier postback
+    $(window).on('load', function() {
+        setTimeout(formatearCamposEntradaMoneda, 300);
     });
 });
 </script>
